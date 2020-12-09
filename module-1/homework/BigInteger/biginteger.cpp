@@ -2,7 +2,6 @@
 #include <vector>
 #include <string>
 
-const int len_f_naive = 128;
 bool operator ==(bigint& a, bigint& b)
 {
 	int a1 = a.arr.size(), b1 = b.arr.size();
@@ -67,12 +66,6 @@ bigint operator - (bigint a)
 	a.is_neg = (!a.is_neg);
 	return a;
 }
-int max(int a, int b) 
-	{
-		if (a > b)
-			return a;
-		else return b;
-	}
 bigint operator+(const bigint a, const bigint b)
 {
 	if (a.is_neg && !b.is_neg)
@@ -94,7 +87,7 @@ bigint operator+(const bigint a, const bigint b)
 		return z;
 	}
 	
-	std::vector<int>c(max(a.arr.size(), b.arr.size()) + 1);
+	std::vector<int>c(std::max(a.arr.size(), b.arr.size()) + 1);
 	int k = 0;
 	for (auto i = 0; i < c.size(); i++)
 	{
@@ -122,7 +115,7 @@ bigint operator-(bigint a,bigint b)
 		z1 = -z1;
 		return z1;
 	}
-	std::vector<int>c(max(a.arr.size(), b.arr.size()));
+	std::vector<int>c(std::max(a.arr.size(), b.arr.size()));
 	int k = 0;
 	for (auto i = 0; i < c.size(); i++)
 	{
@@ -208,7 +201,7 @@ void operator--(bigint &a)
 	a -= t;
 }
 void extend_vec(bigint &a, bigint &b) {
-	int n = max(a.arr.size(), b.arr.size());
+	int n = std::max(a.arr.size(), b.arr.size());
 	if (n % 2 == 0) n++;
 	a.arr.resize(n);
 	b.arr.resize(n);
