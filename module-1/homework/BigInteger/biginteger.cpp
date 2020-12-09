@@ -14,11 +14,9 @@ bool operator !=(bigint& a, bigint& b)
 }
 bool operator <(const bigint& a, const bigint& b)
 {
-	bool k1 = a.is_neg;
-	bool k2 = a.is_neg;
-	if (k1 && !k2)return true;
-	if (!k1 && k2)return false;
-	if (!k1 && !k2)
+	if (a.is_neg && !b.is_neg)return true;
+	if (!a.is_neg && b.is_neg)return false;
+	if (!a.is_neg && !b.is_neg)
 	{
 		if (a.arr.size()<b.arr.size())return true;
 		if (a.arr.size() > b.arr.size())return false;
@@ -31,7 +29,7 @@ bool operator <(const bigint& a, const bigint& b)
 		}
 
 	}
-	if (k1 && k2)
+	if (a.is_neg && b.is_neg)
 	{
 		if (a.arr.size() < b.arr.size())
 			return false;
