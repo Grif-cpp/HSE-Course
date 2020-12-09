@@ -1,3 +1,8 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+const int len_f_naive = 128;
 bool operator ==(bigint& a, bigint& b)
 {
 	int a1 = a.arr.size(), b1 = b.arr.size();
