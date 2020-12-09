@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
+const int len_f_naive = 128;
 
 bool operator ==(bigint& a, bigint& b)
 {
