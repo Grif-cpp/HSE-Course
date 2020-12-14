@@ -1,15 +1,21 @@
 class bigint
 {
-public:
-	std::vector<int>arr;
+private:
+std::vector<int>arr;
 	bool is_neg;
+public:
 	int base = 1e9;
 	friend bigint operator - (bigint a);
 	friend bigint operator +(const bigint a,const bigint b);
-	friend bigint operator -( bigint a,  bigint b);
+	friend bigint operator -( bigint a,  bigint b);	
+	friend bigint Karatsuba(const bigint &a, const bigint &b);
+	friend void extend_vec(bigint &a, bigint &b);
+	friend bigint naive_mul(const bigint & x, const bigint& y);
 	friend bigint operator *(const bigint &a,const bigint &b);
 	friend bigint operator /( bigint &a,  bigint &b);
 	friend bool operator <(const bigint &a,const bigint &b);
+	friend void operator ++(bigint &a);
+	friend void operator --(bigint &a);
 	friend bool operator >(bigint &a, bigint &b);
 	friend bool operator <=(bigint &a, bigint &b);
 	friend bool operator >=(bigint &a, bigint &b);
