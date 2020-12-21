@@ -4,29 +4,32 @@
 #include <algorithm>
 const int len_f_naive = 128;
 
-bool operator ==(bigint& a, bigint& b)
+bool operator ==(const BigInteger& a,const  BigInteger& b)
 {
-	int a1 = a.arr.size(), b1 = b.arr.size();
-	if (a1 != b1)return false;
-	for (int i = 0; i < a1; i++)
+	if (a.arr.size() != b.arr.size())return false;
+	for (size_t i = 0; i < a.arr.size(); i++)
 	{
 		if (a.arr[i] != b.arr[i])return false;
 	}
 	return true;
 }
-bool operator !=(bigint& a, bigint& b)
+bool operator !=(BigInteger& a, BigInteger& b)
 {
 	return (!(a == b));
 }
-bool operator <(const bigint& a, const bigint& b)
+bool operator <(const BigInteger& a, const BigInteger& b)
 {
-	if (a.is_neg && !b.is_neg)return true;
-	if (!a.is_neg && b.is_neg)return false;
+	if (a.is_neg && !b.is_neg)
+		return true;
+	if (!a.is_neg && b.is_neg)
+		return false;
 	if (!a.is_neg && !b.is_neg)
 	{
-		if (a.arr.size()<b.arr.size())return true;
-		if (a.arr.size() > b.arr.size())return false;
-		for (int i = a.arr.size() - 1; i >= 0; i--)
+		if (a.arr.size()<b.arr.size())
+			return true;
+		if (a.arr.size() > b.arr.size())
+			return false;
+		for (size_t i = a.arr.size() - 1; i >= 0; i--)
 		{
 			if (a.arr[i] < b.arr[i])
 				return true;
@@ -51,40 +54,40 @@ bool operator <(const bigint& a, const bigint& b)
 	}
 	return false;
 }
-bool operator>(bigint& a, bigint& b)
+bool operator>(const BigInteger& a, const BigInteger& b)
 {
 	return(a != b && !(a < b));
 }
-bool operator<=(bigint& a, bigint& b)
+bool operator<=(const BigInteger& a,const BigInteger& b)
 {
 	return(a==b || a<b);
 }
-bool operator>=(bigint& a, bigint& b)
+bool operator>=(const BigInteger& a, const BigInteger& b)
 {
 	return(a == b || a > b);
 }
-bigint operator - (bigint a)
+BigInteger operator - (BigInteger a)
 {
 	a.is_neg = (!a.is_neg);
 	return a;
 }
-bigint operator+(const bigint a, const bigint b)
+BigInteger operator+(const BigInteger a, const BigInteger b)
 {
 	if (a.is_neg && !b.is_neg)
 	{
-		bigint t = -a;
+		BigInteger t = -a;
 		return (b - t);
 	}
 	if (!a.is_neg && b.is_neg)
 	{
-		bigint t1 = -a;
+		BigInteger t1 = -a;
 		return (b - t1);
 	}
 	if (a.is_neg && b.is_neg)
 	{
-		bigint t1 = -a;
-		bigint t = -b;
-		bigint z = (t1 + t);
+		BigInteger t1 = -a;
+		BigInteger t = -b;
+		BigInteger z = (t1 + t);
 		z = -z;
 		return z;
 	}
@@ -98,22 +101,23 @@ bigint operator+(const bigint a, const bigint b)
 		c[i] = k % 10;
 		k = k / 10;
 	}
-	bigint q;
+	BigInteger q;
 	q.arr = c;
 	return q;
 }
-bigint operator-(bigint a,bigint b)
+BigInteger operator-(BigInteger a,BigInteger b)
 {
-	if (b.is_neg)return (a + (-b));
+	if (b.is_neg)
+		return (a + (-b));
 	if (a.is_neg)
 	{
-		bigint z = ((-a) + b);
+		BigInteger z = ((-a) + b);
 		z = -z;
 		return z;
 	}
 	if (a < b)
 	{
-		bigint z1 = (b - a);
+		BigInteger z1 = (b - a);
 		z1 = -z1;
 		return z1;
 	}
@@ -134,13 +138,13 @@ bigint operator-(bigint a,bigint b)
 			k = -1;
 		}
 	}
-	bigint t;
+	BigInteger t;
 	t.arr = c;
 	return t;
 }
-bigint toBigint(std::string &s)
+BigInteger toBigint(std::string &s)
 {
-	bigint a1;
+	BigInteger a1;
 	a1.is_neg = false;
 	std::vector<int>a(s.length());
 	for (int i = 0; i < s.length(); i++)
@@ -156,7 +160,7 @@ bigint toBigint(std::string &s)
 	a1.arr = a;
 	return a1;
 }
-std::string toString(bigint &a)
+std::string toString(BigInteger &a)
 {
 	std::string s;
 	reverse(a.arr.begin(), a.arr.end());
@@ -177,39 +181,40 @@ std::string toString(bigint &a)
 	else if (a.is_neg)s = '-' + s;
 	return s;
 }
-bool toBool(bigint &a)
+bool toBool(BigInteger &a)
 {
-	if (a.arr.size() == 0)return false;
+	if (a.arr.size() == 0)
+		return false;
 	return true;
 }
-void operator+=(bigint &a,bigint &b)
+void operator+=(BigInteger &a,BigInteger &b)
 {
 	a = (a + b);
 }
-void operator-=(bigint &a, bigint &b)
+void operator-=(BigInteger &a, BigInteger &b)
 {
 	a = (a - b);
 }
-void operator++(bigint &a)
+void operator++(BigInteger &a)
 {
-	bigint t;
+	BigInteger t;
 	t.arr.push_back(1);
 	a += t;
 }
-void operator--(bigint &a)
+void operator--(BigInteger &a)
 {
-	bigint t;
+	BigInteger t;
 	t.arr.push_back(1);
 	a -= t;
 }
-void extend_vec(bigint &a, bigint &b) {
+void extend_vec(BigInteger &a, BigInteger &b) {
 	int n = std::max(a.arr.size(), b.arr.size());
 	if (n % 2 == 0) n++;
 	a.arr.resize(n);
 	b.arr.resize(n);
 }
-bigint naive_mul(const bigint & x, const bigint& y) {
-	bigint res;
+BigInteger naive_mul(const BigInteger & x, const BigInteger& y) {
+	BigInteger res;
 	res.arr.resize(x.arr.size() * 2);
 	for (auto i = 0; i < x.arr.size(); ++i) {
 		for (auto j = 0; j < x.arr.size(); ++j) {
@@ -218,23 +223,23 @@ bigint naive_mul(const bigint & x, const bigint& y) {
 	}
 	return res;
 }
-bigint Karatsuba(const bigint &a,const bigint &b) {
+BigInteger Karatsuba(const BigInteger &a,const BigInteger &b) {
 	
-	bigint res;
+	BigInteger res;
 	res.arr.resize(a.arr.size() * 2);
 	if (a.arr.size() <= len_f_naive) {
 		return naive_mul(a, b);
 	}
-	bigint xr, xl, yl, yr;
+	BigInteger xr, xl, yl, yr;
 	int k = a.arr.size() / 2;
 	xl.arr = { a.arr.begin(),a.arr.begin() + k };
 	xr.arr = { a.arr.begin() + k,a.arr.end() };
 	yl.arr = { b.arr.begin(),b.arr.begin() + k };
 	yr.arr = { b.arr.begin() + k,b.arr.end() };
-	bigint p1, p2, p3;
+	BigInteger p1, p2, p3;
 	p1 = Karatsuba(xl, yl);
 	p2 = Karatsuba(xr, yr);
-	bigint xlr, ylr;
+	BigInteger xlr, ylr;
 	for (int i = 0; i < k; i++) {
 		xlr.arr.push_back(xl.arr[i] + xr.arr[i]);
 		ylr.arr.push_back(yl.arr[i] + yr.arr[i]);
@@ -260,11 +265,12 @@ void finalize(std::vector<int>& res) {
 		res[i] %= 10;
 	}
 }
-bigint operator *(const bigint &a,const bigint &b) {
-	bigint a1 = a, b1 = b;
-	bool z1 = a.is_neg, z2 = b.is_neg;
+BigInteger operator *(const BigInteger &a,const BigInteger &b) {
+	BigInteger a1 = a, b1 = b;
+	bool z1 = a.is_neg;
+	bool z2 = b.is_neg;
 	extend_vec(a1, b1);
-	bigint res= Karatsuba(a1, b1);
+	BigInteger res= Karatsuba(a1, b1);
 	finalize(res.arr);
 	res.is_neg = 0;
 	if (!z1 && z2 || z1 && !z2)
@@ -272,19 +278,20 @@ bigint operator *(const bigint &a,const bigint &b) {
 	return res;
 
 }
- bigint toBigint(int& a) {
+ BigInteger toBigint(int& a) {
 	 std::string s;
 	 s = std::to_string(a);
 	return toBigint(s);
 }
-bigint operator/( bigint &a,bigint &b) 
+BigInteger operator/( BigInteger &a,BigInteger &b) 
 {
-	bool z1 = a.is_neg, z2 = b.is_neg;
+	bool z1 = a.is_neg;
+	bool z2 = b.is_neg;
 	a.is_neg = 0;
 	b.is_neg = 0;
-	a.dig();
-	b.dig();
-	bigint temp;
+	a.resizer();
+	b.resizer();
+	BigInteger temp;
 	temp.is_neg = false;
 	int l = 0, r = a.base;
 	while (l < r - 1) {
@@ -292,31 +299,31 @@ bigint operator/( bigint &a,bigint &b)
 		std::string s;
 		temp = toBigint(m);
 		temp = temp * b;
-		temp.dig();
+		temp.resizer();
 		if (temp <= a)
 			l = m;
 		else r = m;
 	}
-	bigint res = toBigint(l);
+	BigInteger res = toBigint(l);
 	a.is_neg = z1;
 	b.is_neg = z2;
 	if (!z1 && z2 || z1 && !z2)
 		res.is_neg = 1 - res.is_neg;
 	return res;
 }
-std::ostream& operator<<(std::ostream& os,  bigint& a)
+std::ostream& operator<<(std::ostream& os,  BigInteger& a)
 {
 	std::string s;
 	os << toString(a);
 	return os;
 }
-std::ostream& operator<<(std::ostream& os, bigint&& a)
+std::ostream& operator<<(std::ostream& os, BigInteger&& a)
 {
 	std::string s;
 	os << toString(a);
 	return os;
 }
-std::istream& operator>>(std::istream& os, bigint& a)
+std::istream& operator>>(std::istream& os, BigInteger& a)
 {
 	std::string s;
 	os >> s;
