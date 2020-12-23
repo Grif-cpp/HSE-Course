@@ -1,6 +1,9 @@
 #pragma once
 
-template<typename Head, typename Tail> 
-struct TypeList;
-
 struct NullType {};
+
+template<typename head, typename tail>
+struct TypeList {
+	typedef head Head;
+	typedef tail Tail;
+};
