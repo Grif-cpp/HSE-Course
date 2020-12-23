@@ -3,10 +3,13 @@
 #include "typelist.h"
 
 template<typename TList>
+struct Length;
+template<typename TList>
 struct Length {
-	static const int length = Length<typename TList::Tail>::length>+1;
+	enum { length = 1 + Length<typename TList::Tail>::length};
 };
+
 template<>
 struct Length<NullType> {
-	static const int length = 0;
+	enum { length = 0 };
 };
